@@ -1,17 +1,17 @@
 /*eslint-disable*/
-import { BASE_API_URL, PUB_STRIPE_API_KEY } from './constants.js';
+import { PUB_STRIPE_API_KEY } from "./constants.js";
 const stripe = Stripe(PUB_STRIPE_API_KEY);
 
 export const bookTour = async (slug) => {
   //1) Get checkout session from endpoint API
-  const url = `${BASE_API_URL}bookings/checkout-session/${slug}`;
+  const url = `/api/v1/bookings/checkout-session/${slug}`;
   console.log(url);
   const session = await fetch(url, {
-    method: 'GET',
+    method: "GET",
   })
     .then((res) => res.json())
     .catch((err) => {
-      showAlert('err', err);
+      showAlert("err", err);
     });
   console.log(session);
 
