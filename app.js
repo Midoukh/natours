@@ -61,8 +61,8 @@ app.use(compression());
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-if(process.env.NODE_ENV === 'production'){
-  console.log() = () => {}
+if (process.env.NODE_ENV === "production") {
+  console.log = function () {};
 }
 
 //uncomment this after installing express-rate-limit
