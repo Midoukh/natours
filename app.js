@@ -18,6 +18,7 @@ const globalErrorHandler = require("./controllers/errorControllers");
 const reviewRouter = require("./Routes/reviewRoutes");
 
 const app = express();
+app.enable("trust-proxy");
 
 app.use((req, res, next) => {
   res.setHeader(
