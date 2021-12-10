@@ -1,8 +1,10 @@
 const path = require("path");
 const hpp = require("hpp");
+const cors = require("cors");
 const express = require("express");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
+const { expressCspHeader, INLINE, NONE, SELF } = require("express-csp-header");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const compression = require("compression");
@@ -17,24 +19,43 @@ const AppError = require("./utils/AppError");
 const globalErrorHandler = require("./controllers/errorControllers");
 const reviewRouter = require("./Routes/reviewRoutes");
 
+const bookingController = require("./controllers/bookingController");
+
 const app = express();
+app.use((req, res, next) => {
+  res.set({
+    "Content-Security-Policy": `default-src 'self' http: https:;block-all-mixed-content;font-src 'self' https: data:;frame-ancestors *;img-src *;object-src 'none';script-src * 'unsafe-inline' 'unsafe-eval';script-src-elem https: http: ;script-src-attr * 'unsafe-inline';style-src * 'unsafe-inline';worker-src * blob:`,
+  });
+  /*res.setHeader(
+    "Content-Security-Policy",
+    "script-src *",
+    "default-src * data: 'unsafe-eval' 'unsafe-inline' blob:",
+    "img-src *",
+    "frame-ancestors *",
+    "worker-src * blob:",
+    "style-src *",
+    "connect-src *"
+  );*/
+  return next();
+});
+
 app.enable("trust-proxy");
 
-app.use((req, res, next) => {
-  res.setHeader(
-    "Content-Security-Policy",
-    "script-src  'self' api.mapbox.com",
-    "script-src-elem 'self' api.mapbox.com"
-  );
-  next();
-});
+//cors
+app.use(cors());
+app.options("*", cors());
+
 //set up pug engine
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  bookingController.webhookCheckout
+);
 //middlewares
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(helmet());
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(cookieParser());
 app.use(express.json());
@@ -46,6 +67,7 @@ app.use(mongoSanitize());
 app.use(xss());
 
 //prevent parametre pollution
+
 app.use(
   hpp({
     whitelist: [

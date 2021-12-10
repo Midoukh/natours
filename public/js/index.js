@@ -1,110 +1,136 @@
-import '@babel/polyfill';
-import { login, logout, signup, resetPassword } from './login';
-import { updateUserSettigns } from './updateSettings';
-import { displayMap } from './mapbox';
-import { bookTour } from './stripe';
-console.log('Hello from index.js');
+import "@babel/polyfill";
+import { login, logout, signup, resetPassword } from "./login";
+import { updateUserSettigns } from "./updateSettings";
+import { displayMap } from "./mapbox";
+import { bookTour } from "./stripe";
+import { showAlert } from "./alert";
+import * as carousell from "./carousell";
+import { handleSearch } from "./search";
+import tippy from "tippy.js";
+import { template } from "./tipyInit";
+import { handlePagination } from "./paginate";
+
+console.log(template);
+tippy("#menu-tippy", {
+  content: template,
+  trigger: "click",
+  allowHTML: true,
+  arrow: true,
+});
+
 //DOM ELEMENTS
-const form = document.querySelector('.form');
-const formUserData = document.querySelector('.form-user-data');
-const formUserPassword = document.querySelector('.form-user-password');
-const mapBox = document.getElementById('map');
-const logOutBtn = document.querySelector('.nav__el--logout');
-const photoName = document.getElementById('photoNm');
-const bookingBtn = document.getElementById('booking-btn');
+const form = document.querySelector(".form");
+const formUserData = document.querySelector(".form-user-data");
+const formUserPassword = document.querySelector(".form-user-password");
+const mapBox = document.getElementById("map");
+const logOutBtn = document.querySelector(".nav__el--logout");
+const photoName = document.getElementById("photoNm");
+const bookingBtn = document.getElementById("booking-btn");
+const searchInp = document.getElementById("search");
+const prevButton = document.getElementById("previous");
+const nextButton = document.getElementById("next");
 
 //Delegation
 
 if (mapBox) {
   const locations = JSON.parse(
-    document.getElementById('map').dataset.locations
+    document.getElementById("map").dataset.locations
   );
   displayMap(locations);
 }
 if (formUserData) {
-  formUserData.addEventListener('submit', async (e) => {
+  formUserData.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const file = document.getElementById('photo').files[0];
+    const file = document.getElementById("photo").files[0];
 
-    formData.append('email', document.getElementById('email_setting').value);
-    formData.append('name', document.getElementById('name_setting').value);
-    formData.append('photo', file);
+    formData.append("email", document.getElementById("email_setting").value);
+    formData.append("name", document.getElementById("name_setting").value);
+    formData.append("photo", file);
 
-    updateUserSettigns(formData, 'emailAndName');
+    updateUserSettigns(formData, "emailAndName");
   });
 }
 if (formUserPassword) {
-  formUserPassword.addEventListener('submit', async (e) => {
+  formUserPassword.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const passwordCurrent = document.getElementById('password-current').value;
-    const password = document.getElementById('password').value;
-    const passwordConfirm = document.getElementById('password-confirm').value;
+    const passwordCurrent = document.getElementById("password-current").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("password-confirm").value;
     const data = {
       passwordCurrent,
       password,
       passwordConfirm,
     };
-    await updateUserSettigns(data, 'password');
-    document.getElementById('password-current').value = '';
-    document.getElementById('password').value = '';
-    document.getElementById('password-confirm').value = '';
+    await updateUserSettigns(data, "password");
+    document.getElementById("password-current").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("password-confirm").value = "";
   });
 }
 if (form) {
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const email = document.getElementById('email').value;
+    const email = document.getElementById("email").value;
     const { pathname } = window.location;
 
     const name =
-      pathname === '/signup' ? document.getElementById('name').value : null;
+      pathname === "/signup" ? document.getElementById("name").value : null;
     const password =
-      pathname === '/signup' || pathname === '/login'
-        ? document.getElementById('password').value
+      pathname === "/signup" || pathname === "/login"
+        ? document.getElementById("password").value
         : null;
     const passwordConfirm =
-      pathname === '/signup'
-        ? document.getElementById('password-confirm').value
+      pathname === "/signup"
+        ? document.getElementById("password-confirm").value
         : null;
     console.log(pathname);
-    if (pathname === '/login') {
+    if (pathname === "/login") {
       //login
-      console.log('Pathname is login');
+      console.log("Pathname is login");
       login(email, password);
-    } else if (pathname === '/signup') {
+    } else if (pathname === "/signup") {
       //signup
       signup(email, name, password, passwordConfirm);
     } else {
-      console.log('Resetting password');
+      console.log("Resetting password");
       resetPassword(email);
     }
   });
 }
 if (logOutBtn) {
-  logOutBtn.addEventListener('click', logout);
+  logOutBtn.addEventListener("click", logout);
 }
 if (photoName) {
-  document.getElementById('photo').addEventListener('change', (e) => {
-    const file = document.getElementById('photo').files[0];
+  document.getElementById("photo").addEventListener("change", (e) => {
+    const file = document.getElementById("photo").files[0];
     const phtoNameTxt =
-      file.name.split('.')[0].length > 11
-        ? file.name.split('.')[0].slice(0, 10) +
-          '....' +
-          file.name.split('.')[1]
-        : file.name.split('.')[0];
+      file.name.split(".")[0].length > 11
+        ? file.name.split(".")[0].slice(0, 10) +
+          "...." +
+          file.name.split(".")[1]
+        : file.name.split(".")[0];
     photoName.textContent = phtoNameTxt;
   });
 }
 
 if (bookingBtn) {
-  bookingBtn.addEventListener('click', async (e) => {
-    const tourId = e.target.getAttribute('data-tourID');
-    const slug = location.pathname.split('/')[2];
+  bookingBtn.addEventListener("click", async (e) => {
+    const tourId = e.target.getAttribute("data-tourID");
+    const slug = location.pathname.split("/")[2];
     console.log(location.pathname);
     console.log(tourId);
-    e.target.textContent = 'Processing...';
+    e.target.textContent = "Processing...";
     await bookTour(slug);
-    e.target.textContent = 'BOOK TOUR NOW';
+    e.target.textContent = "BOOK TOUR NOW";
   });
 }
+
+const alertMessage = document.body.dataset.alert;
+
+if (alertMessage) showAlert("sucess", alertMessage, 15);
+
+searchInp.addEventListener("keydown", handleSearch);
+
+prevButton.addEventListener("click", handlePagination);
+nextButton.addEventListener("click", handlePagination);

@@ -1,16 +1,22 @@
 header.header
     nav.nav.nav--tours
-        a.nav__el(href='/') All tours
 
     .header__logo
-        img(src='/img/logo-white.png' alt='Natours logo')
+        a.nav__el(href='/')
+            img(src='/img/logo-white.png' alt='Natours logo')
+    .header__search
+        label(for="search")
+            input(type="text" id="search" placeholder="Type something..")
+            include _spinner
+        .search-list 
+
     nav.nav.nav--user
         if user
-            a.nav__el.nav__el--logout Log Out
-            a.nav__el(href='/me')
-                img.nav__user-img(src=`/img/users/${user.photo}` alt=`Photo of ${user.name}`)
-                span= user.name.split(' ')[0]
+            //a.nav__el.nav__el--logout Log Out
+            //a.nav__el(href='/me')
+                //img.nav__user-img(src=`/img/users/${user.photo}` alt=`Photo of ${user.name}`)
+                //span= user.name.split(' ')[0]
+            include _menu
         else
-            a(href='/signup').nav__el.nav__el--cta Sign up
             a(href='/login').nav__el.nav__el--cta Log In
             
