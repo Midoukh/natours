@@ -29,6 +29,7 @@ const bookingBtn = document.getElementById("booking-btn");
 const searchInp = document.getElementById("search");
 const prevButton = document.getElementById("previous");
 const nextButton = document.getElementById("next");
+const profilePictureMenu = document.getElementById("profile-pic");
 
 //Delegation
 
@@ -96,6 +97,13 @@ if (form) {
       console.log("Resetting password");
       resetPassword(email);
     }
+  });
+}
+if (profilePictureMenu) {
+  const dropDownMenu = document.getElementById("drp-down-menu");
+
+  profilePictureMenu.addEventListener("click", (e) => {
+    dropDownMenu.classList.toggle("show-drp");
   });
 }
 if (logOutBtn) {

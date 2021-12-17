@@ -14877,8 +14877,9 @@ var currentPage = 1;
 var handlePagination = function handlePagination(e) {
   var btnId = handleGetButtonId(e.target);
   handleSetLoading();
-  setTimeout(function () {//if (btnId === "previous") previous(e.target);
-    //else next(e.target);
+  setTimeout(function () {
+    handleRemoveLoading();
+    if (btnId === "previous") previous(e.target);else next(e.target);
   }, 1000);
 };
 
@@ -14891,12 +14892,11 @@ var handleGetButtonId = function handleGetButtonId(element) {
 };
 
 var next = function next(button) {
-  console.log("Calling the next");
-  var prevButton = document.getElementById("previous");
-  console.log(currentPage * RESULTS, parseInt(toursLength) + 3); //styling the next and the previous button
+  var prevButton = document.getElementById("previous"); //styling the next and the previous button
 
-  if (currentPage * RESULTS >= parseInt(toursLength) + 3) {
+  if (currentPage * RESULTS >= parseInt(toursLength)) {
     handleCheckingIfTargetIsButton(button, "next");
+    console.log("This condition should stop it");
     return;
   }
 
@@ -14928,16 +14928,18 @@ var handleRequest = function handleRequest(skip) {
   Array.from(tours.children).forEach(function (tour) {
     var tourId = +tour.getAttribute("data-id");
 
-    if (tourId >= skip && tourId < skip + 4) {
-      tour.style.display = "flex";
-    } else {
-      tour.style.display = "none";
+    if (tourId) {
+      if (tourId >= skip && tourId < skip + 4) {
+        tour.style.display = "flex";
+      } else {
+        tour.style.display = "none";
+      }
     }
   });
 };
 
 var handleStyleNextButton = function handleStyleNextButton(button) {
-  if (currentPage * RESULTS >= parseInt(toursLength) + 3) {
+  if (currentPage * RESULTS > parseInt(toursLength)) {
     button.style.opacity = ".2";
     button.setAttribute("disabled", true);
     button.style.cursor = "not-allowed";
@@ -14969,35 +14971,23 @@ var handleCheckingIfTargetIsButton = function handleCheckingIfTargetIsButton(tar
 };
 
 var handleSetLoading = function handleSetLoading() {
-  Array.from(tours.children).map(function (tour) {
-    return tour.style.display = "none";
-  });
-  /*const spinner = `
-        <div class="sk-folding-cube" style="margin: 5% 50%; display: inline-block;">
-        <div class="sk-cube1 sk-cube"></div>
-        <div class="sk-cube2 sk-cube"></div>
-        <div class="sk-cube4 sk-cube"></div>
-        <div class="sk-cube3 sk-cube"></div>
-        </div>`;*/
-
-  var spinner = document.createElement("div");
-  spinner.className = "sk-folding-cube";
-  spinner.style.margin = "5% 50%";
-  spinner.style.display = "inline-block";
-  [0, 0, 0, 0].forEach(function (el, i) {
-    var div = document.createElement("div");
-    div.className = "sk-cube".concat(i + 1, " sk-cube");
-    spinner.append(div);
+  Array.from(tours.children).map(function (ele) {
+    if (ele.className !== "sk-folding-cube") ele.style.display = "none";else ele.style.display = "inline-block";
   });
   tours.style.display = "block";
-  tours.append(spinner);
 };
 
 var handleRemoveLoading = function handleRemoveLoading() {
-  Array.from(tours.children).map(function (tour) {
-    return tour.style.display = "none";
-  });
-};
+  /*Array.from(tours.children).map((ele) => {
+    if (ele.className === "sk-folding-cube") ele.style.display = "none";
+  });*/
+  tours.lastChild.style.display = "none";
+  tours.style.display = "grid";
+}; //when click on next or previous: show spinner for 1.5s then continue to the next or the previous page
+//DOM manipulation necessary for this to happen
+//1)hide all the tours
+//2)append the spinner to the end of the page
+//3)after 1.5s remove the spinner
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -15308,7 +15298,8 @@ var photoName = document.getElementById("photoNm");
 var bookingBtn = document.getElementById("booking-btn");
 var searchInp = document.getElementById("search");
 var prevButton = document.getElementById("previous");
-var nextButton = document.getElementById("next"); //Delegation
+var nextButton = document.getElementById("next");
+var profilePictureMenu = document.getElementById("profile-pic"); //Delegation
 
 if (mapBox) {
   var locations = JSON.parse(document.getElementById("map").dataset.locations);
@@ -15408,6 +15399,13 @@ if (form) {
   });
 }
 
+if (profilePictureMenu) {
+  var dropDownMenu = document.getElementById("drp-down-menu");
+  profilePictureMenu.addEventListener("click", function (e) {
+    dropDownMenu.classList.toggle("show-drp");
+  });
+}
+
 if (logOutBtn) {
   logOutBtn.addEventListener("click", _login.logout);
 }
@@ -15486,7 +15484,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34865" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44199" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

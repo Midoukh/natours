@@ -334,7 +334,19 @@ body {
   right: 32rem;
 }
 .header__logo img {
-  height: 3.5rem;
+  height: 15.5rem;
+  margin-bottom: 2.5rem;
+}
+.header__logo h3 {
+  margin-left: -5rem;
+}
+.drowp-down-menu {
+  position: fixed;
+  min-width: 15vh;
+  min-height: 25vh;
+  background-color: white;
+  top: 7rem;
+  right: 1rem;
 }
 .header__search {
   height: 100%;
@@ -504,7 +516,43 @@ body {
   -webkit-filter: drop-shadow(0 0.75rem 0.5rem rgba(0, 0, 0, 0.25));
   filter: drop-shadow(0 0.75rem 0.5rem rgba(0, 0, 0, 0.25));
 }
-
+.drowp-down-menu {
+  position: fixed;
+  min-width: 15vh;
+  min-height: 25vh;
+  background-color: white;
+  top: 8rem;
+  right: 1rem;
+  padding: 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.336);
+  visibility: hidden;
+  opacity: 0;
+  transition: all .2s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+}
+.show-drp {
+  visibility: visible;
+  opacity: 1;
+}
+.drowp-down-menu--item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+.drowp-down-menu--item:hover {
+  background-color: #7dece4;
+}
+.drowp-down-menu--item a,
+.drowp-down-menu li a span{
+  color: #1c1c1c;
+}
+.logout {
+  height: 5rem;
+  width: 5rem;
+}
 .section-description {
   background-color: #fcfcfc;
   margin-top: calc(0px - var(--section-rotate));
@@ -1338,6 +1386,20 @@ body {
 .pagination__buttons button strong {
   margin-right: .5rem;
 }
+@media (max-width: 1000px) {
+  .pagination__buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  .pagination__buttons button:first-child {
+    margin-right: 1rem;
+  }
+}
+@media (max-width: 400px){
+  .pagination__buttons button .btn--small{
+    padding: 1.25rem 1.5rem !important;
+  }
+}
 .error {
   position: absolute;
   top: 35%;
@@ -1610,12 +1672,13 @@ body {
   }
 }
 .sk-folding-cube {
-  margin: 20px auto;
+  margin: 5% 50%;
   width: 40px;
   height: 40px;
   position: relative;
   -webkit-transform: rotateZ(45deg);
           transform: rotateZ(45deg);
+  display: none;
 }
 
 .sk-folding-cube .sk-cube {
@@ -1634,7 +1697,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #333;
+  background-color: #7dece4;
   -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
           animation: sk-foldCubeAngle 2.4s infinite linear both;
   -webkit-transform-origin: 100% 100%;

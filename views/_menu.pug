@@ -1,3 +1,13 @@
 
 - const src = user? `/img/users/${user.photo}` : '/img/users/default.jpg'
-img.nav__user-img.tip#menu-tippy(src=`${src}` alt=`Photo of current user`)
+
+img.nav__user-img.tip#profile-pic(src=`${src}` alt=`Photo of current user`)
+ul.drowp-down-menu#drp-down-menu
+    li.drowp-down-menu--item 
+        a.nav__el(href='/me')
+            img.nav__user-img(src=`${src}` alt=`Photo of ${user.name}`)
+            span= user.name.split(' ')[0]
+    li.drowp-down-menu--item 
+        img.logout(src="/img/logout.png", alt="logout")
+        a.nav__el.nav__el--logout Log Out
+
