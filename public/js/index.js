@@ -9,6 +9,7 @@ import { handleSearch } from "./search";
 import tippy from "tippy.js";
 import { template } from "./tipyInit";
 import { handlePagination } from "./paginate";
+import { handleBurgerOpenClose } from "./burgerMenu";
 
 console.log(template);
 tippy("#menu-tippy", {
@@ -30,7 +31,7 @@ const searchInp = document.getElementById("search");
 const prevButton = document.getElementById("previous");
 const nextButton = document.getElementById("next");
 const profilePictureMenu = document.getElementById("profile-pic");
-
+const burgerMenu = document.getElementById("burger-menu");
 //Delegation
 
 if (mapBox) {
@@ -132,6 +133,10 @@ if (bookingBtn) {
     await bookTour(slug);
     e.target.textContent = "BOOK TOUR NOW";
   });
+}
+
+if (burgerMenu) {
+  burgerMenu.addEventListener("click", handleBurgerOpenClose);
 }
 
 const alertMessage = document.body.dataset.alert;

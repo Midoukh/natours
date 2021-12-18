@@ -20,4 +20,6 @@ header.header
             include _menu
         else
             a(href='/login').nav__el.nav__el--cta Log In
+        #burger-menu 
+            span(data-user=`${user? 1:0}` data-user-obj=`${user && JSON.stringify(user)}`) 
             
