@@ -1,5 +1,5 @@
-const tours = document.querySelector(".card-container");
-const toursLength = tours.getAttribute("data-tourslength");
+const tours = document.querySelector(".card-container") || [];
+const toursLength = tours.lenght ? tours.getAttribute("data-tourslength") : 0;
 //page = 1: show from 0 to 3
 //page = 2: show from 4 to 7
 //each page can have 4 results

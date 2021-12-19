@@ -29,6 +29,7 @@ const createMenu = (state) => {
       const logoutIcon = document.createElement("img");
       logoutIcon.className = "logout";
       logoutIcon.src = "/img/logout.png";
+
       img.className = "nav__user-img";
       const userObj = JSON.parse(
         document
@@ -36,12 +37,12 @@ const createMenu = (state) => {
           .getAttribute("data-user-obj")
       );
 
-      console.log(typeof userObj);
       const src = userObj.photo
         ? `/img/users/${userObj.photo}`
         : "/img/users/default.jpg";
       img.src = src;
       img.alt = `Photo of ${userObj.name}`;
+      img.style.display = "unset";
       span.textContent = userObj.name.split(" ")[0];
 
       a.append(img);
@@ -63,6 +64,12 @@ const createMenu = (state) => {
       li2.innerHTML = "";
       li1.append(a);
     }
+
+    li1.style.display = "flex";
+    li1.style.justifyContent = "center";
+    li2.style.display = "flex";
+    li2.style.justifyContent = "center";
+
     menuUlist.append(li1);
     menuUlist.append(li2);
     menuContainer.append(menuUlist);

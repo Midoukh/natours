@@ -6,18 +6,9 @@ import { bookTour } from "./stripe";
 import { showAlert } from "./alert";
 import * as carousell from "./carousell";
 import { handleSearch } from "./search";
-import tippy from "tippy.js";
-import { template } from "./tipyInit";
+
 import { handlePagination } from "./paginate";
 import { handleBurgerOpenClose } from "./burgerMenu";
-
-console.log(template);
-tippy("#menu-tippy", {
-  content: template,
-  trigger: "click",
-  allowHTML: true,
-  arrow: true,
-});
 
 //DOM ELEMENTS
 const form = document.querySelector(".form");
@@ -145,5 +136,7 @@ if (alertMessage) showAlert("sucess", alertMessage, 15);
 
 searchInp.addEventListener("keydown", handleSearch);
 
-prevButton.addEventListener("click", handlePagination);
-nextButton.addEventListener("click", handlePagination);
+if (prevButton) {
+  prevButton.addEventListener("click", handlePagination);
+  nextButton.addEventListener("click", handlePagination);
+}

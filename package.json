@@ -8,8 +8,8 @@
     "dev": "nodemon server",
     "start:prod": "NODE_ENV=production nodemon server",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file dist.js",
-    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file dist.js"
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file dist.js --public-url ./public/js",
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file dist.js --public-url ./public/js"
   },
   "keywords": [],
   "author": "",

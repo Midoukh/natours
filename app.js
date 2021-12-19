@@ -26,20 +26,10 @@ app.use((req, res, next) => {
   res.set({
     "Content-Security-Policy": `default-src 'self' http: https:;block-all-mixed-content;font-src 'self' https: data:;frame-ancestors *;img-src *;object-src 'none';script-src * 'unsafe-inline' 'unsafe-eval';script-src-elem https: http: ;script-src-attr * 'unsafe-inline';style-src * 'unsafe-inline';worker-src * blob:`,
   });
-  /*res.setHeader(
-    "Content-Security-Policy",
-    "script-src *",
-    "default-src * data: 'unsafe-eval' 'unsafe-inline' blob:",
-    "img-src *",
-    "frame-ancestors *",
-    "worker-src * blob:",
-    "style-src *",
-    "connect-src *"
-  );*/
   return next();
 });
 
-app.enable("trust-proxy");
+//app.enable("trust-proxy");
 
 //cors
 app.use(cors());
@@ -94,9 +84,6 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 
-app.use((req, res, next) => {
-  next();
-});
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
