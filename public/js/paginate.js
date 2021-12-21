@@ -1,5 +1,6 @@
-const tours = document.querySelector(".card-container") || [];
-const toursLength = tours.lenght ? tours.getAttribute("data-tourslength") : 0;
+const tours = document.querySelector(".card-container");
+
+const toursLength = tours ? tours.getAttribute("data-tourslength") : 0;
 //page = 1: show from 0 to 3
 //page = 2: show from 4 to 7
 //each page can have 4 results
@@ -58,16 +59,18 @@ const handleResultsToShow = () => {
   handleRequest(skip);
 };
 const handleRequest = (skip) => {
-  Array.from(tours.children).forEach((tour) => {
-    const tourId = +tour.getAttribute("data-id");
-    if (tourId) {
-      if (tourId >= skip && tourId < skip + 4) {
-        tour.style.display = "flex";
-      } else {
-        tour.style.display = "none";
+  if (tours) {
+    Array.from(tours.children).forEach((tour) => {
+      const tourId = +tour.getAttribute("data-id");
+      if (tourId) {
+        if (tourId >= skip && tourId < skip + 4) {
+          tour.style.display = "flex";
+        } else {
+          tour.style.display = "none";
+        }
       }
-    }
-  });
+    });
+  }
 };
 const handleStyleNextButton = (button) => {
   if (currentPage * RESULTS > parseInt(toursLength)) {
@@ -102,20 +105,24 @@ const handleCheckingIfTargetIsButton = (target, type) => {
 };
 
 const handleSetLoading = () => {
-  Array.from(tours.children).map((ele) => {
-    if (ele.className !== "sk-folding-cube") ele.style.display = "none";
-    else ele.style.display = "inline-block";
-  });
+  if (tours) {
+    Array.from(tours.children).map((ele) => {
+      if (ele.className !== "sk-folding-cube") ele.style.display = "none";
+      else ele.style.display = "inline-block";
+    });
 
-  tours.style.display = "block";
+    tours.style.display = "block";
+  }
 };
 
 const handleRemoveLoading = () => {
   /*Array.from(tours.children).map((ele) => {
     if (ele.className === "sk-folding-cube") ele.style.display = "none";
   });*/
-  tours.lastChild.style.display = "none";
-  tours.style.display = "grid";
+  if (tours) {
+    tours.lastChild.style.display = "none";
+    tours.style.display = "grid";
+  }
 };
 
 //when click on next or previous: show spinner for 1.5s then continue to the next or the previous page

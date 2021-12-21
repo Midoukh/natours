@@ -9,6 +9,7 @@ import { handleSearch } from "./search";
 
 import { handlePagination } from "./paginate";
 import { handleBurgerOpenClose } from "./burgerMenu";
+import { getData, simplifyString, postData } from "./utils";
 
 //DOM ELEMENTS
 const form = document.querySelector(".form");
@@ -23,6 +24,7 @@ const prevButton = document.getElementById("previous");
 const nextButton = document.getElementById("next");
 const profilePictureMenu = document.getElementById("profile-pic");
 const burgerMenu = document.getElementById("burger-menu");
+const accountSideNav = document.querySelector(".side-nav");
 //Delegation
 
 if (mapBox) {
@@ -113,7 +115,25 @@ if (photoName) {
     photoName.textContent = phtoNameTxt;
   });
 }
+if (accountSideNav) {
+  const userObj = JSON.parse(
+    document.querySelector(".user-view").getAttribute("data-user")
+  );
+  Array.from(accountSideNav.children).forEach((node) => {
+    const url = node.children[0].getAttribute("data-api");
 
+    if (url !== "#")
+      node.children[0].addEventListener("click", () => {
+        postData(url, {
+          userId: userObj._id,
+        });
+
+        if (simplifyString(node.children[0].textContent) === url)
+          node.children[0].classList.add("side-nav--active");
+        else node.children[0].classList.remove("side-nav--active");
+      });
+  });
+}
 if (bookingBtn) {
   bookingBtn.addEventListener("click", async (e) => {
     const tourId = e.target.getAttribute("data-tourID");

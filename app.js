@@ -21,6 +21,12 @@ const reviewRouter = require("./Routes/reviewRoutes");
 
 const bookingController = require("./controllers/bookingController");
 
+//search *
+//sign in up and log in *
+//payement *
+//dashboard functionalities *
+//pagination *
+
 const app = express();
 app.use((req, res, next) => {
   res.set({

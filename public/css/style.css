@@ -408,6 +408,9 @@ body {
   padding-top: 20px;
   transition: all .3s ease-in-out;
 }
+#menu ul {
+  padding-top: 10rem;
+}
 #menu.overlay {
   visibility: visible;
   opacity: 1;
@@ -616,6 +619,7 @@ body {
   align-items: center;
   padding: 1rem;
   box-sizing: border-box;
+  cursor: pointer;
 }
 .drowp-down-menu--item:hover {
   background-color: #7dece4;
@@ -1251,7 +1255,12 @@ body {
 .side-nav li:hover {
   border-left: 4px solid #fff !important;
 }
-.side-nav--active a {
+.side-nav li span {
+  color: white;
+  font-size: 2.5em;
+  cursor: pointer;
+}
+.side-nav--active span {
   -webkit-transform: translateX(-3px);
   transform: translateX(-3px);
 }
@@ -1272,8 +1281,8 @@ body {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-.side-nav a:hover,
-.side-nav a:active {
+.side-nav span:hover,
+.side-nav span:active {
   -webkit-transform: translateX(3px);
   transform: translateX(3px);
 }
@@ -1281,7 +1290,7 @@ body {
   height: 1.9rem;
   width: 1.9rem;
   fill: #f7f7f7;
-  margin-right: 2rem;
+  margin: 0rem 2rem;
 }
 
 .admin-nav {
@@ -1872,6 +1881,12 @@ body {
   .header__logo {
     right: 17rem;
   }
+  .nav a {
+    display: none;
+  }
+  .user-view {
+    flex-flow: column;
+  }
 }
 @media (max-width: 600px){
   .cta__content {
@@ -1896,3 +1911,8 @@ body {
     margin-left: 1rem;
   }
 } 
+@media (max-width: 400px) {
+  .main {
+    padding: 8rem 2rem;
+  }
+}

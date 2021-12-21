@@ -46,7 +46,20 @@ exports.getMyTours = async (req, res, next) => {
     tours,
   });
 };
+exports.getMyToursData = async (req, res, next) => {
+  //1) find all booking
+  console.log(req.body);
+  const bookings = await Booking.find({ user: req.body.userId });
 
+  //2) Find tours with the returned IDs
+  const tourIds = bookings.map((item) => item.tour);
+  const tours = await Tour.find({ _id: { $in: tourIds } });
+
+  res.status(200).json({
+    sucess: "Success",
+    tours,
+  });
+};
 exports.getLoginForm = async (req, res) => {
   res.status(200).render("loginForm", {
     title: "Log into your account",

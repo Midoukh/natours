@@ -18,7 +18,17 @@ router.get(
 );
 
 router.get("/me", authController.protect, viewsController.getAccount);
-router.get("/my-tours", authController.protect, viewsController.getMyTours);
+//router.get("/my-tours", authController.protect, viewsController.getMyTours);
+/*router.get(
+  "/my-bookings",
+  authController.protect,
+  viewsController.getMyToursData
+);*/
+router.post(
+  "/my-bookings",
+  authController.protect,
+  viewsController.getMyToursData
+);
 
 //updating user data using html form
 /*
