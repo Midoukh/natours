@@ -2,6 +2,11 @@ extends base
 
 block content 
     main.main
+        .overview-message 
+            h1 Enjoy 😋  
+            h2 The World 🌎 🥾 with 
+                span Livest!
+            p Explore our world & find your perfect holiday, Our hand-picked range of American and worldwide destinations offer plenty of adventures to choose from, which our team of passionate guides know inside out.
         include _carousell 
         .card-container(data-toursLength=`${tours.length}`)
             each tour, index in tours

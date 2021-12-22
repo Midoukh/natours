@@ -19,7 +19,7 @@ header.header
                 //span= user.name.split(' ')[0]
             include _menu
         else
-            a(href='/login').nav__el.nav__el--cta Log In
+            a(href='/login').nav__el.nav__el--cta.loginButton Log In
         #burger-menu 
             span(data-user=`${user? 1:0}` data-user-obj=`${user && JSON.stringify(user)}`) 
             

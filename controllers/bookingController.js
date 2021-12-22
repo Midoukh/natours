@@ -11,6 +11,12 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //const tour = await Tour.findById(req.params.tourID);
   const tour = await Tour.findOne({ slug: req.params.slug });
 
+  //product image
+  let prodImg;
+
+  if (process.env.NODE_ENV === "development")
+    prodImg = `http://localhost:3000/img/tours/${tour.imageCover}`;
+  else prodImg = `"https://livest.herokuapp.com/img/tours/${tour.imageCover}`;
   //2)Create a checkout session
 
   const session = await stripe(
@@ -29,7 +35,8 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         name: `${tour.name} Tour`,
         description: tour.summary,
         images: [
-          `${req.protocol}://${req.get("host")}/img/tours/${tour.imageCover}`,
+          //`${req.protocol}://${req.get("host")}/img/tours/${tour.imageCover}`,
+          prodImg,
         ],
         amount: tour.price * 100,
         currency: "usd",
@@ -39,17 +46,18 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 
   //3) Create session as a response
+  console.log(prodImg);
   res.status(200).json({
     status: "succes",
     session,
-    tourDetails: {
+    /*tourDetails: {
       name: `${tour.name} Tour`,
       description: tour.summary,
       images: ["image url from the deployed server"],
       amount: tour.price * 100,
       currency: "usd",
       quantity: 1,
-    },
+    },*/
   });
 });
 

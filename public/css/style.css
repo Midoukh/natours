@@ -51,12 +51,32 @@ body {
 .main {
   background-color: #f7f7f7;
   padding: 8rem 6rem;
+  padding-top: 4rem;
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
   position: relative;
 }
-
+.overview-message {
+  padding: 2rem 0;
+}
+.overview-message h1 {
+  font-size: 6em;
+  color: rgba(0, 0, 0, 0.89);
+}
+.overview-message h2 {
+  font-size: 2em;
+  font-weight: 100;
+}
+.overview-message h2 span{
+  font-weight: 900;
+  color: #6fb4d4;
+}
+.overview-message p {
+  font-size: 1.7em;
+  color: #000000db;
+  margin: 2rem 0;
+}
 .flex {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -415,7 +435,7 @@ body {
   visibility: visible;
   opacity: 1;
   padding-top: 100px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .drowp-down-menu {
@@ -639,6 +659,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  flex-wrap: wrap;
 }
 .section-description > * {
   padding: 0 8vw;
@@ -1235,6 +1256,7 @@ body {
   height: 4.5rem;
   width: 4.5rem;
   cursor: pointer;
+  border: 2px solid #6fb4d4;
 }
 .menu-content {
   width: 8vh;
@@ -1624,7 +1646,7 @@ body {
 .form__already-have-acc, .form__forget-password {
   text-decoration: none;
   font-size: 1.7em;
-  color: #43be58;
+  color: #ea8c6f;
 } 
 .form__forget-password {
   color: #eb4d4b;
@@ -1862,12 +1884,19 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
+  max-width: 100vw;
 }
 .car-heading {
   margin: 20%;
   font-size: 4em;
 }
 @media (max-width: 800px) {
+  .main {
+    padding: 8rem 2rem;
+  }
+  .header {
+    padding: 0 1rem;
+  }
   #burger-menu {
     display: block;
   }
@@ -1879,19 +1908,34 @@ body {
     width: 70%;
   }
   .header__logo {
-    right: 17rem;
+    right: 14rem;
   }
-  .nav a {
+  .loginButton, .loginButton:link, .loginButton:visited {
     display: none;
   }
   .user-view {
     flex-flow: column;
+  }
+  .login-form {
+    max-width: 75rem;
+  }
+}
+@media (max-width: 640px){
+  .section-description > * {
+   
+    flex: 0 0 100%;
   }
 }
 @media (max-width: 600px){
   .cta__content {
     display: flex;
     flex-flow: column;
+  }
+  .heading-primary {
+    font-size: 3rem;
+  }
+  .heading-box__group {
+    margin-top: 1rem;
   }
 }
 @media (max-width: 500px) {
@@ -1911,8 +1955,3 @@ body {
     margin-left: 1rem;
   }
 } 
-@media (max-width: 400px) {
-  .main {
-    padding: 8rem 2rem;
-  }
-}

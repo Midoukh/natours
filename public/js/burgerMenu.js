@@ -17,13 +17,15 @@ const createMenu = (state) => {
     const menuUlist = document.createElement("ul");
     const li1 = document.createElement("li");
     const li2 = document.createElement("li");
-    if (checkIfThereIsAuser) {
+    console.log(checkIfThereIsAuser());
+    if (checkIfThereIsAuser()) {
       const a = document.createElement("a");
       const logoutLink = document.createElement("a");
       a.className = "nav__el";
       a.href = "/me";
       logoutLink.className = "nav__el.nav__el--logout";
       logoutLink.textContent = "Log Out";
+      logoutLink.style.color = "#f7f7f7";
       const img = document.createElement("img");
       const span = document.createElement("span");
       const logoutIcon = document.createElement("img");
@@ -31,11 +33,10 @@ const createMenu = (state) => {
       logoutIcon.src = "/img/logout.png";
 
       img.className = "nav__user-img";
-      const userObj = JSON.parse(
-        document
-          .querySelector("#burger-menu span")
-          .getAttribute("data-user-obj")
-      );
+      const userDataInHtml = document
+        .querySelector("#burger-menu span")
+        .getAttribute("data-user-obj");
+      const userObj = userDataInHtml ? JSON.parse(userDataInHtml) : {};
 
       const src = userObj.photo
         ? `/img/users/${userObj.photo}`
@@ -56,7 +57,7 @@ const createMenu = (state) => {
       li2.append(logoutLink);
     } else {
       const a = document.createElement("a");
-      a.className = "nav__el.nav__el--cta";
+      a.className = "nav__el nav__el--cta";
       a.href = "/login";
       a.textContent = "Log in";
 
