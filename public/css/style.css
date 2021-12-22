@@ -1419,6 +1419,15 @@ body {
   width: 2rem;
   fill: #32c5be;
 }
+.location-icon {
+  fill: #f4ca8d;
+}
+.calendar-icon {
+  fill: #80ddbf;
+}
+.flag-icon {
+  fill: #9da0f6;
+}
 .card__footer {
   background-color: #f7f7f7;
   padding: 2.5rem 3rem;

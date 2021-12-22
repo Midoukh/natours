@@ -40,7 +40,7 @@ const createMenu = (state) => {
 
       const src = userObj.photo
         ? `/img/users/${userObj.photo}`
-        : "/img/users/default.jpg";
+        : "/img/users/default.png";
       img.src = src;
       img.alt = `Photo of ${userObj.name}`;
       img.style.display = "unset";

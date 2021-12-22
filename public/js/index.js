@@ -65,6 +65,11 @@ if (formUserPassword) {
 }
 if (form) {
   form.addEventListener("submit", (e) => {
+    const oldButtonTextContent = e.target.querySelector("button").textContent;
+    //disable button
+    e.target.querySelector("button").setAttribute("disable", true);
+    e.target.querySelector("button").style.cursor = "not-allowed";
+    e.target.querySelector("button").innerHTML = "Loading...";
     e.preventDefault();
     const email = document.getElementById("email").value;
     const { pathname } = window.location;
@@ -91,6 +96,12 @@ if (form) {
       console.log("Resetting password");
       resetPassword(email);
     }
+    //enbale button
+    setTimeout(() => {
+      e.target.querySelector("button").removeAttribute("disable");
+      e.target.querySelector("button").style.cursor = "pointer";
+      e.target.querySelector("button").innerHTML = oldButtonTextContent;
+    }, 1500);
   });
 }
 if (profilePictureMenu) {
